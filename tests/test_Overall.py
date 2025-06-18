@@ -26,6 +26,28 @@ import pytest
             None,
         ),
     ])
+
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        # previous test cases here, with None for expect_raises, except for the next one - add ValueError
+        # as an expected exception (since it has a negative input value)
+        (
+            [[-1, 2, 3], [4, 5, 6], [7, 8, 9]],
+            [[0, 0.67, 1], [0.67, 0.83, 1], [0.78, 0.89, 1]],
+            
+        ),
+        (
+            [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
+            [[0.33, 0.67, 1], [0.67, 0.83, 1], [0.78, 0.89, 1]],
+          
+        ),
+         (
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            
+        ),
+    ])
 def test_patient_normalise(test, expected, expect_raises):
     """Test normalisation works for arrays of one and positive integers."""
         

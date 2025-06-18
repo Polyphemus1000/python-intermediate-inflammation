@@ -5,10 +5,7 @@ import glob
 import os
 import numpy as np
 
-import sys
-sys.path.append('/home/livphd1/python-intermediate-inflammation')
 
-dir_path = '/home/livphd1/python-intermediate-inflammation/data'
 
 from inflammation import models, views
 
@@ -37,21 +34,4 @@ class JsonSource:
         print('hello')
         
         return list(data)
-
-
-def analyse_data(DataSource):
-    """Calculates the standard deviation by day between datasets.
-
-    Gets all the inflammation data from CSV files within a directory,
-    works out the mean inflammation value for each day across all datasets,
-    then plots the graphs of standard deviation of these means."""
     
-   
-    data = DataSource.load_information_data()
-
-    means_by_day = map(models.daily_mean, data)
-    means_by_day_matrix = np.stack(list(means_by_day))
-
-    daily_standard_deviation = np.std(means_by_day_matrix, axis=0)
-
-    return daily_standard_deviation
