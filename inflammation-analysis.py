@@ -5,7 +5,7 @@ import argparse
 import os
 
 from inflammation import models, views
-from inflammation.compute_data import analyse_data
+from inflammation.compute_data import analyse_data, CSVDataSource
 
 
 def main(args):
@@ -15,13 +15,19 @@ def main(args):
     - selecting the necessary models and views for the current task
     - passing data between models and views
     """
+    
     infiles = args.infiles
     if not isinstance(infiles, list):
         infiles = [args.infiles]
 
 
     if args.full_data_analysis:
-        analyse_data(os.path.dirname(infiles[0]))
+        DataSource = CSVDataSource(os.path.dirname(infiles[0]))
+        daily_standard_deviation = analyse_data(DataSource)
+        graph_data = {
+        'standard deviation by day': daily_standard_deviation,
+    }
+        views.visualize(graph_data)
         return
 
     for filename in infiles:
